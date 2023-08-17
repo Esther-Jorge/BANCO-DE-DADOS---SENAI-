@@ -1,0 +1,84 @@
+CREATE DATABASE atividade;
+
+use atividade;
+
+CREATE TABLE usuario(
+ID_usuario int,
+nome_usuario varchar(50),
+senha int,
+email varchar(50)
+);
+
+INSERT INTO usuario(ID_usuario, nome_usuario, senha, email) VALUES(1, 'Esther', 111, 'esther1@gmail.com');
+INSERT INTO usuario(ID_usuario, nome_usuario, senha, email) VALUES(2,'Paulo',222, 'paulo2@gmail.com');
+INSERT INTO usuario(ID_usuario, nome_usuario, senha, email) VALUES(3,'Anna', 333, 'anna3@gmail.com');
+INSERT INTO usuario(ID_usuario, nome_usuario, senha, email) VALUES(4,'Pedro', 444, 'pedro4@gmail.com');
+INSERT INTO usuario(ID_usuario, nome_usuario, senha, email) VALUES(5,'Paula', 555, 'paula5@gmail.com');
+
+SELECT*FROM usuario;
+
+CREATE TABLE produtos(
+ID_produto int,
+nome_produto varchar(50),
+descrição_produto varchar(50),
+preço varchar(50),
+categoria varchar(50),
+quant_estoque int
+);
+
+SELECT*FROM produtos;
+
+INSERT INTO produtos(ID_produto,nome_produto,descrição_produto,preço,categoria,quant_estoque) VALUES(10,'Celular', 'produto-celular', 'R$1.800,00', 'eletronico', 400);
+INSERT INTO produtos(ID_produto,nome_produto,descrição_produto,preço,categoria,quant_estoque) VALUES(20,'Aspirador de pó','produto-aspirador', 'R$ 500,00', 'eletronico', 250);
+INSERT INTO produtos(ID_produto,nome_produto,descrição_produto,preço,categoria,quant_estoque) VALUES(30,'Air Fryer', 'produto-fritadeira', 'R$ 420,00', 'eletronico', 500);
+INSERT INTO produtos(ID_produto,nome_produto,descrição_produto,preço,categoria,quant_estoque) VALUES(40, 'Notebook','produto-notebook', 'R$ 1.799,00', 'eletronico', 100);
+INSERT INTO produtos(ID_produto,nome_produto,descrição_produto,preço,categoria,quant_estoque) VALUES(50,'Tablet', 'produto-tablet', 'R$ 601,00', 'eletronico', 70);
+
+CREATE TABLE eventos(
+ID_evento int,
+título varchar(50),
+descrição varchar(50),
+data_hora_inicio varchar(50),
+data_hora_final varchar(50),
+local_eventos varchar(50)
+);
+
+INSERT INTO eventos(ID_evento,título,descrição,data_hora_inicio,data_hora_final,local_eventos) VALUES(101, 'Casamento', 'festa', '23/03/2023 - 18:00hs', '23/03/2023 - 22:00hs', 'Rua Principal');
+INSERT INTO eventos(ID_evento,título,descrição,data_hora_inicio,data_hora_final,local_eventos) VALUES(102, 'Aniversario', 'festa', '27/06/2023 - 15:00hs', '27/06/2023 - 22:00hs', 'Avenida Principal');
+INSERT INTO eventos(ID_evento,título,descrição,data_hora_inicio,data_hora_final,local_eventos) VALUES(103, 'Bodas de Casamento', 'festa', '03/03/2023 - 19:00hs', '03/03/2023 - 23:00hs', 'Rua da Direita');
+INSERT INTO eventos(ID_evento,título,descrição,data_hora_inicio,data_hora_final,local_eventos) VALUES(104, 'Comemoração Escolar', 'festa', '15/12/2023 - 15:00hs', '15/12/2023 - 19:00hs', 'Rua Boa Vista');
+INSERT INTO eventos(ID_evento,título,descrição,data_hora_inicio,data_hora_final,local_eventos) VALUES(105, 'Aniversario Infantil', 'festa', '16/08/2023 - 14:00hs', '16/08/2023 - 20:00hs', 'Avenida Boa Vista');
+
+SELECT*FROM eventos;
+
+CREATE TABLE pedidos(
+ID_pedido int,
+ID_cliente int,
+status_pedido varchar(50),
+total varchar(50)
+);
+
+INSERT INTO pedidos(ID_pedido, ID_cliente, status_pedido, total) VALUES(111, 11, 'Em andamento', 'R$ 1.200,00');
+INSERT INTO pedidos(ID_pedido, ID_cliente, status_pedido, total) VALUES(112, 12, 'Concluido', 'R$ 600,00');
+INSERT INTO pedidos(ID_pedido, ID_cliente, status_pedido, total) VALUES(113, 13, 'Em trânsito', 'R$ 750,00');
+INSERT INTO pedidos(ID_pedido, ID_cliente, status_pedido, total) VALUES(114, 14, 'Concluido', 'R$ 450,00');
+INSERT INTO pedidos(ID_pedido, ID_cliente, status_pedido, total) VALUES(115, 15, 'Em andamento', 'R$ 950,00');
+
+SELECT*FROM pedidos;
+
+CREATE TABLE tarefas(
+ID_tarefa int,
+descrição_tarefa varchar(50),
+data_criação varchar(50),
+prazo varchar(50),
+status_tarefa varchar(50),
+ID_responsavel int
+);
+
+SELECT*FROM tarefas;
+
+INSERT INTO tarefas(ID_tarefa, descrição_tarefa, data_criação, prazo, status_tarefa, ID_responsavel) VALUES(200, 'Relatório', 14.06, '20/06/2023', 'Em andamento', 01);
+INSERT INTO tarefas(ID_tarefa, descrição_tarefa, data_criação, prazo, status_tarefa, ID_responsavel) VALUES(201, 'Projeto', 15.03, '26/05/2023', 'Concluido', 02);
+INSERT INTO tarefas(ID_tarefa, descrição_tarefa, data_criação, prazo, status_tarefa, ID_responsavel) VALUES(202, 'Campanha', 07.10, '15/11/2023', 'Concluido', 03);
+INSERT INTO tarefas(ID_tarefa, descrição_tarefa, data_criação, prazo, status_tarefa, ID_responsavel) VALUES(203, 'Relatório RH', 06.12, '15/12/2023', 'Em andamento', 04);
+INSERT INTO tarefas(ID_tarefa, descrição_tarefa, data_criação, prazo, status_tarefa, ID_responsavel) VALUES(204, 'Projeto Marketing', 13.05, '20/05/2023','Em andamento', 05);
