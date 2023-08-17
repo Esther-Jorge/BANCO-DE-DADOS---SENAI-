@@ -1,0 +1,20 @@
+CREATE DATABASE teste;
+
+use teste;
+CREATE TABLE pessoa(
+id int,
+nome varchar(50),
+idade int,
+sexo char
+
+);
+INSERT INTO pessoa(id, nome, idade,sexo) values(1, 'Esther','30','F');
+INSERT INTO pessoa(id, nome, idade,sexo) values(2, 'Marcelo','15','M');
+
+select*from pessoa;
+select nome from pessoa;
+select nome,idade from pessoa;0
+select nome from pessoa WHERE id = 2;
+select nome,idade from pessoa WHERE id = 2;
+
+UPDATE pessoa set idade = 30 WHERE id = 1;
