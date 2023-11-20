@@ -1,0 +1,80 @@
+CREATE DATABASE loja;
+USE loja;
+
+CREATE TABLE clientes (
+  id_cliente INTEGER UNSIGNED AUTO_INCREMENT,
+  nome_cliente VARCHAR(255),
+  email VARCHAR(255),
+  PRIMARY KEY(id_cliente)
+);
+
+CREATE TABLE compras (
+  id_compra INTEGER UNSIGNED AUTO_INCREMENT,
+  clientes_id_cliente INTEGER UNSIGNED ,
+  produto VARCHAR(255) ,
+  valor INTEGER UNSIGNED ,
+  PRIMARY KEY(id_compra),
+  INDEX compras_FKIndex1(clientes_id_cliente)
+);
+
+INSERT INTO compras (clientes_id_cliente, produto,valor) VALUES  
+(1,'Camiseta', 29.99),  (2,'Sapato',59.99),  (1, 'Celular',399.99),  (3, 'Livro',19.99),  (2, 'Bolsa',39.99),  (null,'Fonesde Ouvido', 49.99);
+
+INSERT INTO clientes (nome_cliente, email) VALUES
+('João Silva','joao@email.com'),  ('MariaOliveira', 'maria@email.com'), ('CarlosSantos', 'carlos@email.com');
+
+SELECT*FROM clientes;
+SELECT*FROM compras;
+
+/* INNER JOIN:Escreva uma consulta SQL que retorne o nome do clientee os detalhes da compra (produto e valor) 
+para todas as compras realizadas.   */
+
+SELECT
+compras.id_compra, compras.produto, compras.valor, clientes.nome_cliente
+FROM compras
+INNER JOIN clientes
+ON compras.clientes_id_cliente = clientes.id_cliente;
+
+/* Retorna o nome do cliente e detalhes da compra*/
+SELECT clientes.nome_cliente, compras.produto, compras.valor
+FROM clientes
+INNER JOIN compras ON clientes.id_cliente = compras.clientes_id_cliente;
+
+
+/* LEFT JOIN: Escreva uma consulta SQL que retorne todos os clientes, incluindo aqueles que ainda não fizeram
+ nenhuma compra. Inclua os detalhes da compra se houver alguma.    */
+ 
+SELECT
+clientes.nome_cliente, compras.produto, compras.valor
+FROM compras
+LEFT JOIN clientes
+ON clientes.id_cliente = compras.clientes_id_cliente;
+
+/* Retorna o nome do cliente e detalhes da compra se houver   */
+ 
+ DELETE FROM COMPRAS 
+ WHERE clientes_id_cliente = 3;
+
+SELECT 
+clientes.nome_cliente, compras.produto, compras.valor
+FROM clientes
+LEFT JOIN compras ON clientes.id_cliente = compras.clientes_id_cliente;
+
+
+  
+ 
+ /*RIGHT JOIN: Escreva uma consulta SQL que retorna todas as compras, incluindo aquelas que não estão associadas 
+ a nenhum cliente. Inclui o nome do cliente se for aplicável.     */
+
+SELECT
+clientes.nome_cliente, compras.produto, compras.valor
+FROM compras
+RIGHT JOIN clientes
+ON clientes.id_cliente = compras.clientes_id_cliente;
+
+
+/* Retorna todas as compras e nome do cliente se aplicavél  */
+SELECT 
+clientes.nome_cliente, compras.produto, compras.valor
+FROM clientes
+RIGHT JOIN compras ON clientes.id_cliente = compras.clientes_id_cliente;
