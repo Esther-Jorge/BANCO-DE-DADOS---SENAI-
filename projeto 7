@@ -1,0 +1,74 @@
+CREATE DATABASE IF NOT EXISTS loja3;
+USE loja3;
+
+CREATE TABLE IF NOT EXISTS clientes (
+    id_cliente INT PRIMARY KEY,
+    nome VARCHAR(100),
+    email VARCHAR(100),
+    telefone VARCHAR(20)
+);
+
+INSERT INTO clientes (id_cliente, nome, email, telefone) VALUES
+(1, 'João Silva', 'joao@example.com', '(11) 1234-5678'),
+(2, 'Maria Oliveira', 'maria@example.com', '(21) 9876-5432'),
+(3, 'Carlos Santos', 'carlos@example.com', '(31) 8765-4321');
+
+CREATE TABLE IF NOT EXISTS pedidos (
+    id_pedido INT PRIMARY KEY,
+    id_cliente INT,
+    data_pedido DATE,
+    total_pedido DECIMAL(10, 2),
+    FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente)
+);
+
+INSERT INTO pedidos (id_pedido, id_cliente, data_pedido, total_pedido) VALUES
+(101, 1, '2023-01-15', 150.50),
+(102, 2, '2023-02-20', 200.75),
+(103, 3, '2023-03-25', 75.20);
+
+select*from clientes;
+select*from pedidos;
+
+/* Criar a stored procedure para inserir um novo cliente*/
+DELIMITER //
+CREATE PROCEDURE InserirNovoCliente()
+BEGIN
+    INSERT INTO clientes (nome, email, telefone)
+    VALUES ('Novo Cliente', 'novocliente@example.com', '(00) 0000-0000');
+END //
+DELIMITER ;
+
+CALL InserirNovoCliente;
+
+-- Criar a stored procedure para inserir um novo cliente
+DELIMITER //
+CREATE PROCEDURE InserirNovoClienteExemplo1()
+BEGIN
+    INSERT INTO clientes (id_cliente,nome, email, telefone)
+    VALUES (4,'Cliente Exemplo 1', 'cliente1@example.com', '(11) 1111-1111');
+    INSERT INTO clientes (id_cliente,nome, email, telefone)
+    VALUES (5,'Cliente Exemplo 2', 'cliente2@example.com', '(22)2222-2222');
+    INSERT INTO clientes (id_cliente,nome, email, telefone)
+    VALUES (8,'Cliente Exemplo 6', 'cliente6@example.com', '(66)6666-6666');
+END //
+DELIMITER ;
+
+
+-- Chamar a stored procedure para inserir um novo cliente
+(Exemplo 1)
+CALL InserirNovoClienteExemplo1();
+
+-- Criar a stored procedure para atualizar informações de um cliente
+DELIMITER //
+CREATE PROCEDURE AtualizarCliente()
+BEGIN
+    UPDATE clientes
+    SET nome = 'Novo Nome',
+        email = 'novo_email@example.com',
+        telefone = '(99) 9999-9999'
+    WHERE id_cliente = 1; -- Aqui você define o critério para a atualização, neste caso, o ID do cliente 1.
+END //
+DELIMITER ;
+-- Chamar a stored procedure para atualizar informações de um cliente
+CALL AtualizarCliente(); 
+
