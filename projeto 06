@@ -1,0 +1,60 @@
+create database aulas;
+use aulas;
+
+CREATE TABLE clientes (
+    id INT PRIMARY KEY,
+    nome VARCHAR(50),
+    email VARCHAR(50),
+    telefone VARCHAR(15)
+);
+
+INSERT INTO clientes (id, nome, email, telefone) VALUES
+(1, 'João Silva', 'joao.silva@gmail.com', '1198765-4321'),
+(2, 'Maria Souza', 'maria.souza@hotmail.com', '2199999-8888'),
+(3, 'Pedro Alves', 'pedro.alves@yahoo.com', '8177777-6666');
+
+
+CREATE TABLE produtos (
+    id INT PRIMARY KEY,
+    nome VARCHAR(50),
+    preco DECIMAL(10,2),
+    descricao VARCHAR(100)
+);
+
+INSERT INTO produtos (id, nome, preco, descricao) VALUES
+(1, 'Camiseta', 39.90, 'Camiseta branca com estampa de caveira'),
+(2, 'Calça Jeans', 99.90, 'Calça jeans azul escura'),
+(3, 'Tênis', 129.90, 'Tênis preto com detalhes em branco e cinza');
+
+
+/* PROCEDURE INSERIR NOVOS PRODUTOS */
+DELIMITER $$
+CREATE PROCEDURE inserir_produto()
+BEGIN
+INSERT INTO produtos (id, nome, preco, descricao) VALUES (4,'meia', 20.90, 'meia-soquete');
+END 
+$$ 
+DELIMITER ;
+
+CALL inserir_produto;
+SELECT*FROM produtos; 
+
+/*PROCEDURE ATUALIZADO */
+DELIMITER $$
+CREATE PROCEDURE atualizar_quantidade_produto()
+BEGIN
+	UPDATE produtos
+    SET nome = 'cinto'
+    WHERE id = '3';
+END 
+$$
+DELIMITER ; 
+CALL atualizar_quantidade_produto;
+
+/* DELETAR */
+DROP PROCEDURE atualizar_quantidade_produto;
+
+
+	
+
+
