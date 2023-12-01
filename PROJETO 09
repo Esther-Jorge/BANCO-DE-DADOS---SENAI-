@@ -1,0 +1,113 @@
+CREATE DATABASE atividade8;
+USE atividade8;
+
+CREATE TABLE Pessoas (
+	PessoaID INT PRIMARY KEY AUTO_INCREMENT,
+    Nome VARCHAR(50),
+    Sobrenome VARCHAR(50),
+    Idade INT
+);
+
+
+
+DELIMITER //
+
+CREATE PROCEDURE InserirPessoa (
+	IN nome Varchar(50),
+    IN sobrenome VARCHAR(50),
+    IN idade INT
+)
+BEGIN 
+	INSERT INTO Pessoas (Nome, Sobrenome, Idade)
+    VALUES (nome, sobrenome, idade);
+END //
+
+DELIMITER ;
+
+
+CALL InserirPessoa('John', 'Alves',30);
+CALL InserirPessoa('Vanessa', 'Rio',25);
+CALL InserirPessoa('Carlos','Sampaio',40);
+
+SELECT*FROM Pessoas; 
+
+/*FUNCTIONS SEM PARAMETRO*/
+
+DELIMITER //
+CREATE FUNCTION obterDataAtual()
+RETURNS DATE 
+BEGIN
+	DECLARE dataAtual DATE;
+    SET dataAtual = CURDATE();
+    RETURN dataAtual;
+END //
+DELIMITER ;
+
+SELECT obterDataAtual()
+SELECT obterDataAtual() AS Data;
+
+CREATE TABLE produtos(
+	produto_id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(50),
+    preco DECIMAL(10,2),
+    estoque INT
+);
+
+SELECT*FROM produtos;
+
+DELIMITER //
+CREATE PROCEDURE InserirProdutos (
+	IN Nome Varchar(50),
+    IN Preco DECIMAL(10,2),
+    IN Estoque INT
+)
+BEGIN 
+	INSERT INTO produtos (nome, preco, estoque)
+    VALUES (Nome, Preco, Estoque);
+END //
+
+DELIMITER ;
+
+
+CALL InserirProdutos('Produto1', 25.99, 100);
+CALL InserirProdutos('Produto2', 49.90, 75);
+CALL InserirProdutos('Produto3', 12.50, 150);
+
+DELIMITER //
+CREATE FUNCTION contarRegistro()
+RETURNS INT DETERMINISTIC
+BEGIN 
+	DECLARE totalRegistros INT;
+    SELECT COUNT(*) INTO totalRegistros FROM produtos;
+	RETURN totalRegistros;
+END //
+DELIMITER ;
+
+SELECT contarRegistro()
+
+DELIMITER //
+CREATE FUNCTION calcularMedia (nota1 INT, nota2 INT, nota3 INT)
+RETURNS DECIMAL (5,2) DETERMINISTIC
+BEGIN
+	DECLARE media DECIMAL(5,2);
+    SET media = (nota1 + nota2 + nota3) / 3.0;
+    RETURN media;
+END //
+DELIMITER ;
+
+SELECT calcularMedia(80, 90, 75) AS media_resultado;
+
+DELIMITER //
+CREATE FUNCTION parOuImpar(numero INT)
+RETURNS VARCHAR(10) DETERMINISTIC
+BEGIN
+	DECLARE resultado VARCHAR(10);
+    IF numero % 2 = 0 THEN
+		SET resultado = 'Par';
+	ELSE 
+		SET resultado = 'Ímpar';
+	END IF;
+    RETURN resultado;
+END //
+DELIMITER ;
+
