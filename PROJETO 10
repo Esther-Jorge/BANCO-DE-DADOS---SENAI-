@@ -1,0 +1,13 @@
+CREATE DATABASE pr;
+USE pr;
+
+delimiter $$
+CREATE PROCEDURE proc_oi()
+BEGIN
+SELECT 'Oi, você acabou de executar um procedimento que está armazenado no bd!
+Sempre que você precisar é só chamar' AS msg;
+END
+$$
+delimiter ; 
+
+call proc_oi;
