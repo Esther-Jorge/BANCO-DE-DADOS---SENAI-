@@ -1,0 +1,84 @@
+CREATE DATABASE tr;
+USE tr;
+
+CREATE TABLE produto(
+	idproduto INT NOT NULL AUTO_INCREMENT,
+    nome_produto VARCHAR(45) NULL,
+    preco_normal DECIMAL(10,2) NULL,
+    preco_desconto DECIMAL(10,2) NULL,
+    PRIMARY KEY (idproduto)
+);
+
+CREATE TRIGGER tr_desconto BEFORE INSERT 
+ON produto
+FOR EACH ROW
+SET NEW.preco_desconto = (NEW.preco_normal * 0.90);
+
+INSERT INTO produto (nome_produto, preco_normal) VALUES ('Monitor', 350);
+INSERT INTO produto (nome_produto, preco_normal) VALUES ('Teclado', 112);
+SELECT*FROM produto;
+
+CREATE TABLE cliente(
+idcliente INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+nome VARCHAR(50) NULL,
+data_nascimento DATE NULL,
+idade INTEGER UNSIGNED NULL , 
+PRIMARY KEY (idcliente)
+);
+
+CREATE TABLE estoque(
+	idestoque INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    qtd INTEGER UNSIGNED NULL,
+    PRIMARY KEY(idestoque)
+);
+
+CREATE TABLE historico_estoque (
+	idhistorico INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    estoque_idestoque INTEGER UNSIGNED NOT NULL,
+    qtd_anterior INTEGER UNSIGNED NULL,
+    qtd_atual INTEGER UNSIGNED NULL,
+    data_atualizacao DATETIME NULL,
+PRIMARY KEY (idhistorico),
+INDEX historico_estoque_FKIndex1(estoque_idestoque)
+);
+
+SELECT*FROM historico_estoque;
+/*
+-- Registra automaticamente um histórico sempre que um novo item for adicionado.
+DELIMITER //
+CREATE TRIGGER after_insert_estoque
+AFTER INSERT ON estoque
+FOR EACH ROW
+BEGIN
+	-- Inserir no histórico
+    INSERT INTO historico_estoque(estoque_idestoque, qtd_atual, data_atualizacao)
+    VALUES (NEW.idestoque, NEW.qtd, NOW());
+END //
+
+DELIMITER ; 
+
+*/
+
+DROP TRIGGER after_insert_estoque;
+
+INSERT INTO estoque (qtd) VALUES (300);
+INSERT INTO estoque (qtd) VALUES (400);
+INSERT INTO estoque (qtd) VALUES (500);
+INSERT INTO estoque (qtd) VALUES (600);
+
+/* Quando for executar é preciso escolher before ou after, mas nunca os dois no mesmo codigo*/
+
+DELIMITER //
+CREATE TRIGGER after_update_estoque
+BEFORE UPDATE ON estoque
+FOR EACH ROW
+BEGIN
+	-- Salvar a nova quantidade no histórico após a atualização
+    INSERT INTO historico_estoque (estoque_idestoque, qtd_anterior, qtd_atual, data_atualizacao)
+    VALUES (NEW.idestoque, OLD.qtd, NEW.qtd, NOW());
+END //
+DELIMITER ; 
+
+INSERT INTO estoque (qtd) VALUES (900);
+UPDATE estoque SET qtd = 150 WHERE idestoque = 1;
+UPDATE estoque SET qtd = 150 WHERE idestoque = 2;
